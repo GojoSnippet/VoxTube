@@ -8,7 +8,7 @@ import Visualize from './pages/Visualize.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <BrowserRouter basename="/VoxTube">
+    <BrowserRouter basename="/">
       <Routes>
         <Route path="/" element={<App />}>
           <Route index element={<Home />} />
