@@ -1,0 +1,560 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* Theme configuration */
+@theme {
+  --color-background: #0a0a0a;
+  --color-surface: #141414;
+  --color-border: #262626;
+  --color-accent: #6366f1;
+  --color-accent-hover: #818cf8;
+  --font-sans: 'Inter', sans-serif;
+}
+
+/* Base styles */
+body {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* =====================================================
+   Legacy View Components - Plain CSS for compatibility
+   ===================================================== */
+
+/* Meaning Dial */
+.meaning-dial {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.dial-title {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.dial-title-main {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: var(--color-accent);
+  text-transform: uppercase;
+}
+
+.dial-title-sub {
+  font-size: 0.75rem;
+  font-style: italic;
+  color: #a1a1aa;
+}
+
+.dial-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.dial-endcap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 4rem;
+}
+
+.endcap-icon {
+  font-size: 1.5rem;
+  color: var(--color-accent);
+  margin-bottom: 0.25rem;
+}
+
+.dial-endcap-right .endcap-icon {
+  color: #818cf8;
+}
+
+.endcap-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.025em;
+  color: white;
+  text-transform: uppercase;
+}
+
+.endcap-sub {
+  font-size: 0.75rem;
+  color: #a1a1aa;
+}
+
+.dial-track {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  height: 2rem;
+}
+
+.dial-track::before {
+  content: '';
+  position: absolute;
+  left: 1rem;
+  right: 1rem;
+  top: 50%;
+  height: 0.25rem;
+  transform: translateY(-50%);
+  border-radius: 0.125rem;
+  background: linear-gradient(90deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0.3) 100%);
+}
+
+.dial-progress {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  height: 0.25rem;
+  transform: translateY(-50%);
+  border-radius: 0.125rem;
+  z-index: 10;
+  background: linear-gradient(90deg, #6366f1, #818cf8, #99aab5);
+  transition: width 0.4s ease;
+}
+
+.dial-stop {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  z-index: 20;
+  transition: transform 0.2s;
+}
+
+.dial-stop:hover {
+  transform: scale(1.1);
+}
+
+.dial-stop:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.dial-dot {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 9999px;
+  background-color: #3f3f46;
+  border: 4px solid var(--color-surface);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+.dial-stop.reached .dial-dot.blur-level-0 {
+  background-color: var(--color-accent);
+}
+
+.dial-stop.reached .dial-dot.blur-level-1 {
+  background-color: #818cf8;
+}
+
+.dial-stop.reached .dial-dot.blur-level-2 {
+  background-color: #a1a1aa;
+}
+
+.dial-stop.reached .dial-dot.blur-level-3 {
+  background-color: #d4d4d8;
+}
+
+.dial-stop.active .dial-dot {
+  transform: scale(1.5);
+  box-shadow: 0 10px 15px -3px rgba(99, 102, 241, 0.5);
+}
+
+.dial-microcopy {
+  text-align: center;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  min-height: 1.25rem;
+  transition: color 0.3s;
+}
+
+.dial-microcopy.microcopy-level-0 { color: var(--color-accent); }
+.dial-microcopy.microcopy-level-1 { color: #818cf8; }
+.dial-microcopy.microcopy-level-2 { color: #a1a1aa; }
+.dial-microcopy.microcopy-level-3 { color: #d4d4d8; }
+
+/* Feels View (Comments List) */
+.feels-view {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.feels-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  max-width: 48rem;
+}
+
+.yt-comments-header {
+  margin-bottom: 0.75rem;
+}
+
+.yt-comments-count {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: white;
+}
+
+.yt-comment {
+  display: flex;
+  gap: 0.75rem;
+  animation: fadeInUp 0.3s ease both;
+}
+
+.yt-comment-avatar,
+.yt-comment-avatar-img {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  object-fit: cover;
+}
+
+.yt-comment-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.yt-comment-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.yt-comment-author {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: white;
+}
+
+.yt-comment-time {
+  font-size: 0.75rem;
+  color: #71717a;
+}
+
+.yt-comment-text {
+  font-size: 0.875rem;
+  line-height: 1.625;
+  color: #d4d4d8;
+  word-wrap: break-word;
+}
+
+.yt-comment-likes {
+  font-size: 0.75rem;
+  color: #71717a;
+  margin-top: 0.375rem;
+}
+
+/* Fragments View */
+.fragments-view {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.fragments-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.fragment-group {
+  flex: 1;
+  min-width: 18rem;
+  max-width: 24rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  animation: magnetize 0.5s ease both;
+}
+
+.fragment-comment {
+  padding: 0.5rem 0.75rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #d4d4d8;
+  animation: floatIn 0.4s ease both;
+}
+
+/* Clusters View */
+.clusters-view {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.clusters-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.cluster-card {
+  border-radius: 1rem;
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  animation: slideIn 0.4s ease both;
+}
+
+.cluster-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.2s;
+}
+
+.cluster-header:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.cluster-name {
+  flex: 1;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: white;
+  margin: 0;
+}
+
+.cluster-count {
+  font-size: 0.875rem;
+  color: #a1a1aa;
+}
+
+.cluster-expand-icon {
+  font-size: 1.25rem;
+  color: #a1a1aa;
+  width: 1.5rem;
+  text-align: center;
+}
+
+.cluster-content {
+  padding: 0 1.25rem 1.25rem;
+}
+
+.cluster-comments {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.cluster-comment {
+  padding: 0.625rem 0.875rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #d4d4d8;
+}
+
+.cluster-show-more {
+  padding: 0.5rem 1rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cluster-show-more:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Claims View */
+.claims-view {
+  height: 100%;
+  overflow-y: auto;
+}
+
+.claims-container {
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1.5rem;
+}
+
+.claims-disclaimer {
+  text-align: center;
+  font-size: 0.75rem;
+  font-style: italic;
+  color: #a1a1aa;
+  padding: 0.75rem 1rem;
+  background-color: var(--color-surface);
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.claims-prose {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.claim-block {
+  animation: fadeInUp 0.4s ease both;
+}
+
+.claim-text {
+  display: block;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  line-height: 1.75;
+  color: #d4d4d8;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.claim-text:hover {
+  border-color: var(--color-accent);
+  box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
+}
+
+.claim-citation {
+  color: var(--color-accent);
+  font-size: 0.875rem;
+  margin-left: 0.25rem;
+}
+
+.claim-expansion {
+  padding: 1rem 1.25rem;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-top: none;
+  border-radius: 0 0 0.75rem 0.75rem;
+  margin-top: -0.75rem;
+}
+
+.claim-clusters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.claim-clusters-label {
+  font-size: 0.75rem;
+  color: #a1a1aa;
+}
+
+.claim-cluster-tag {
+  padding: 0.25rem 0.625rem;
+  background-color: rgba(99, 102, 241, 0.2);
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  color: var(--color-accent);
+}
+
+.claim-source-comments h4 {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #a1a1aa;
+  margin: 0 0 0.75rem 0;
+}
+
+.claim-comments-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.claim-source-comment {
+  padding: 0.625rem 0.875rem;
+  background-color: var(--color-surface);
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #d4d4d8;
+  font-style: italic;
+}
+
+.claim-more-comments {
+  font-size: 0.75rem;
+  color: #a1a1aa;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes magnetize {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes floatIn {
+  from {
+    opacity: 0;
+    transform: translateX(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
