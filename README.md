@@ -1,6 +1,6 @@
 # VoxTube
 
-*Hear what thousands are saying.*
+*Hear what thousands are saying.*  
 
 VoxTube analyzes YouTube comments using OpenAI embeddings and clustering to uncover patterns, themes, and personal stories from music video comments.
 
