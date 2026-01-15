@@ -5,31 +5,43 @@ import { cn } from '@/lib/utils'
 interface VoxLogoProps {
   size?: 'sm' | 'md' | 'lg'
   showText?: boolean
+  subtitle?: string
 }
 
 const sizes = {
-  sm: { icon: 32, text: 'text-xl' },
-  md: { icon: 48, text: 'text-3xl' },
-  lg: { icon: 80, text: 'text-6xl' },
+  sm: { icon: 32, text: 'text-xl', subtitle: 'text-[11px]' },
+  md: { icon: 44, text: 'text-2xl', subtitle: 'text-sm' },
+  lg: { icon: 64, text: 'text-4xl sm:text-5xl md:text-6xl', subtitle: 'text-xs sm:text-sm md:text-base' },
 }
 
-export function VoxLogo({ size = 'md', showText = true }: VoxLogoProps) {
+export function VoxLogo({ size = 'md', showText = true, subtitle }: VoxLogoProps) {
   const [isHovered, setIsHovered] = useState(false)
+  
+  // Responsive icon sizes for lg
+  const iconSize = size === 'lg' ? 'w-12 h-8 sm:w-16 sm:h-10 md:w-20 md:h-12' : ''
 
   return (
     <div
-      className="flex items-center gap-3 cursor-pointer"
+      className="flex flex-col items-center gap-2 cursor-pointer"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Icon */}
-      <svg
-        width={sizes[size].icon}
-        height={sizes[size].icon * 0.6}
-        viewBox="0 0 80 48"
-        fill="none"
-      >
-        <rect x="0" y="4" width="80" height="40" rx="20" fill="#6366f1" />
+      <div className="flex items-center gap-2 sm:gap-3">
+        {/* Icon */}
+        <svg
+          width={sizes[size].icon}
+          height={sizes[size].icon * 0.6}
+          viewBox="0 0 80 48"
+          fill="none"
+          className={size === 'lg' ? 'w-10 h-6 sm:w-12 sm:h-8 md:w-14 md:h-9' : ''}
+        >
+        <rect x="0" y="4" width="80" height="40" rx="20" fill="url(#logoGradient)" />
+        <defs>
+          <linearGradient id="logoGradient" x1="0" y1="24" x2="80" y2="24" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#0ea5e9" />
+            <stop offset="1" stopColor="#ec4899" />
+          </linearGradient>
+        </defs>
         <circle cx="24" cy="24" r="6" fill="white" />
 
         {/* Sound waves with pulse animation on hover */}
@@ -92,12 +104,23 @@ export function VoxLogo({ size = 'md', showText = true }: VoxLogoProps) {
       {showText && (
         <span
           className={cn(
-            'font-bold tracking-tight text-white',
+            'font-bold tracking-[-0.02em] text-gray-900',
             sizes[size].text
           )}
         >
           VoxTube
         </span>
+      )}
+      </div>
+      
+      {/* Subtitle for clarity */}
+      {subtitle && (
+        <p className={cn(
+          'text-gray-500 font-medium tracking-[0.05em] uppercase',
+          sizes[size].subtitle
+        )}>
+          {subtitle}
+        </p>
       )}
     </div>
   )
